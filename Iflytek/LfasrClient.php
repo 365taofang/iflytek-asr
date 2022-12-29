@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 
-class ASR
+class LfasrClient
 {
     private $api_url = 'https://raasr.xfyun.cn/v2/api';
     private $api_upload = '/upload';
@@ -36,14 +36,14 @@ class ASR
         return $signa;
     }
 
-    public function upload_via_stream($fileName, $fileSize, $duration, $stream, $callbackUrl = '')
+    public function upload_via_stream($stream, $fileName, $fileSize, $duration, $callbackUrl = '')
     {
         return $this->upload($fileName, $fileSize, $duration, 'fileStream', '', $callbackUrl, $stream);
     }
 
-    public function upload_via_url($fileName, $fileSize, $duration, $audioUrl, $callbackUrl = '')
+    public function upload_via_url($audioUrl, $fileName, $callbackUrl = '')
     {
-        return $this->upload($fileName, $fileSize, $duration, 'urlLink', $audioUrl, $callbackUrl);
+        return $this->upload($fileName, 0, 0, 'urlLink', $audioUrl, $callbackUrl);
     }
 
     /**
@@ -91,18 +91,8 @@ class ASR
         if ($callbackUrl) $params['callbackUrl'] = $callbackUrl;
         $query = http_build_query($params);
         $url = $this->api_url . $this->api_upload . '?' . $query;
-        $headers = array(
-            "Content-type" => "application/json"
-        );
-        $request = new Request('POST', $url, $headers, $fileStream);
-        $response = $this->httpClient->send($request);
-        $code = $response->getStatusCode();
-        if ($code > 300) {
-            throw new \Exception("请求失败，错误状态码{$code}");
-        }
-        $content = $response->getBody()->getContents();
-        $info = json_decode($content);
-        return $info;
+        return $this->_get_result($url, $fileStream);
+
     }
 
     /**
@@ -117,6 +107,7 @@ class ASR
      *
      * @return mixed
      * @throws GuzzleException
+     * @throws \Exception
      */
     public function get_result($orderId, $resultType = 'transfer')
     {
@@ -129,10 +120,15 @@ class ASR
         );
         $query = http_build_query($params);
         $url = $this->api_url . $this->api_get_result . '?' . $query;
+        return $this->_get_result($url);
+    }
+
+    private function _get_result($url, $body = null)
+    {
         $headers = array(
             "Content-type" => "application/json"
         );
-        $request = new Request('POST', $url, $headers);
+        $request = new Request('POST', $url, $headers, $body);
         $response = $this->httpClient->send($request);
         $code = $response->getStatusCode();
         if ($code > 300) {

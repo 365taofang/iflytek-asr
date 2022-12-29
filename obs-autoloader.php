@@ -2,7 +2,7 @@
 
 
 $mapping = [
-	'Iflytek\ASR' => __DIR__.'/Iflytek/ASR.php',
+	'Iflytek\LfasrClient' => __DIR__ . '/Iflytek/LfasrClient.php',
 ];
 
 

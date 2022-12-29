@@ -10,8 +10,8 @@
 ## 创建asr请求
 
 ```
-use Iflytek\ASR;
-$asr = new ASR();
+use Iflytek\LfasrClient;
+$lfasrClient = new LfasrClient();
 ```
 
 ## 上传文件
@@ -22,13 +22,13 @@ $asr = new ASR();
 
 ```
 $file = './audio/lfasr.wav';
-$asr->upload_via_stream('测试1.wav', 3136940, 200, file_get_contents($file),'http://callbacUrl.com');
+$lfasrClient->upload_via_stream(file_get_contents($file), '测试1.wav', 3136940, 200 [, 'http://callbacUrl.com']);
 ```
 
 ### 方式二：通过外链url
 
 ```
-$asr->upload_via_url('测试2.wav', 3136940, 200, 'http://xxx.yyy.ddd/audio/lfasr.wav','http://callbacUrl.com');
+$lfasrClient->upload_via_url('http://xxx.yyy.ddd/audio/lfasr.wav', '测试2.wav' [,'http://callbacUrl.com']);
 ```
 
 ## 查询结果
@@ -44,5 +44,5 @@ $asr->upload_via_url('测试2.wav', 3136940, 200, 'http://xxx.yyy.ddd/audio/lfas
  * 组合结果查询：多个类型结果使用”,”隔开，目前只支持转写和质检结果一起返回（如果任务有失败则只返回处理成功的结果）
  * 转写和质检结果组合返回：transfer，predict
  */
-$asr->get_result('DKHJQ202212291654390770002600038F00000', 'transfer');
+$lfasrClient->get_result('DKHJQ202212291654390770002600038F00000', 'transfer');
 ```
