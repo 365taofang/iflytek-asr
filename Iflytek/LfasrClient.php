@@ -71,7 +71,6 @@ class LfasrClient
      **/
     public function upload($fileName, $fileSize, $duration, $audioMode, $audioUrl, $callbackUrl, $fileStream = null)
     {
-        if (!$fileName || !$fileSize || !$duration) throw new \Exception('参数有误');
         if (!in_array($audioMode, array('fileStream', 'urlLink'))) throw new \Exception('audioMode参数有误');
         $params = array(
             'appId' => $this->appid,
@@ -135,7 +134,7 @@ class LfasrClient
             throw new \Exception("请求失败，错误状态码{$code}");
         }
         $content = $response->getBody()->getContents();
-        $info = json_decode($content);
+        $info = json_decode($content, true);
         return $info;
     }
 
