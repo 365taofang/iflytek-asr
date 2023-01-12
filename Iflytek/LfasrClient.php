@@ -21,8 +21,8 @@ class LfasrClient
 
     public function __construct()
     {
-        $this->appid = getenv('XFYUN_APP_ID');
-        $this->secret_key = getenv('XFYUN_SECRET_KEY');
+        $this->appid = getenv('XFYUN_APP_ID') ?: env('XFYUN_APP_ID');
+        $this->secret_key = getenv('XFYUN_SECRET_KEY') ?: env('XFYUN_SECRET_KEY');
         $this->ts = time();
         $this->signa = $this->_get_signa();
         $this->httpClient = new Client();
