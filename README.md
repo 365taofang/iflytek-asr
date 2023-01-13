@@ -15,6 +15,7 @@ $lfasrClient = new LfasrClient();
 ```
 
 ## 上传文件
+默认识别两个人对话
 
 回调地址可不填
 
