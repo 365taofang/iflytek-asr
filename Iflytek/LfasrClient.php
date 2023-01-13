@@ -80,6 +80,7 @@ class LfasrClient
             'fileSize' => $fileSize,
             'duration' => $duration,
             'roleType' => $roleType,
+            'roleNum' => 2,
             'audioMode' => $audioMode
         );
         if ($audioMode == 'urlLink') {
