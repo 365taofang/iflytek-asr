@@ -22,13 +22,13 @@ $lfasrClient = new LfasrClient();
 
 ```
 $file = './audio/lfasr.wav';
-$lfasrClient->upload_via_stream(file_get_contents($file), '测试1.wav', 3136940, 200 [, 'http://callbacUrl.com']);
+$lfasrClient->upload_via_stream(file_get_contents($file), '测试1.wav', 3136940, 200, $roleType=0, $callbackUrl='http://callbacUrl.com');
 ```
 
 ### 方式二：通过外链url
 
 ```
-$lfasrClient->upload_via_url('http://xxx.yyy.ddd/audio/lfasr.wav', '测试2.wav' [,'http://callbacUrl.com']);
+$lfasrClient->upload_via_url('http://xxx.yyy.ddd/audio/lfasr.wav', '测试2.wav', $roleType=0, $callbackUrl='http://callbacUrl.com');
 ```
 
 ## 查询结果

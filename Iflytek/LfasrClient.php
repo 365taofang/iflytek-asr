@@ -36,14 +36,14 @@ class LfasrClient
         return $signa;
     }
 
-    public function upload_via_stream($stream, $fileName, $fileSize, $duration, $callbackUrl = '')
+    public function upload_via_stream($stream, $fileName, $fileSize, $duration, $roleType = 0, $callbackUrl = '')
     {
-        return $this->upload($fileName, $fileSize, $duration, 'fileStream', '', $callbackUrl, $stream);
+        return $this->upload($fileName, $fileSize, $duration, 'fileStream', '', $callbackUrl, $roleType, $stream);
     }
 
-    public function upload_via_url($audioUrl, $fileName, $callbackUrl = '')
+    public function upload_via_url($audioUrl, $fileName, $roleType = 0, $callbackUrl = '')
     {
-        return $this->upload($fileName, 0, 0, 'urlLink', $audioUrl, $callbackUrl);
+        return $this->upload($fileName, 0, 0, 'urlLink', $audioUrl, $callbackUrl, $roleType);
     }
 
     /**
@@ -69,7 +69,7 @@ class LfasrClient
      * 如果url中包含特殊字符，audioUrl 需要UrlEncode(不包含签名时需要的 UrlEncode)，长度限制512
      * audioUrl = '';
      **/
-    public function upload($fileName, $fileSize, $duration, $audioMode, $audioUrl, $callbackUrl, $fileStream = null)
+    public function upload($fileName, $fileSize, $duration, $audioMode, $audioUrl, $callbackUrl, $roleType = 0, $fileStream = null)
     {
         if (!in_array($audioMode, array('fileStream', 'urlLink'))) throw new \Exception('audioMode参数有误');
         $params = array(
@@ -79,6 +79,7 @@ class LfasrClient
             'fileName' => $fileName,
             'fileSize' => $fileSize,
             'duration' => $duration,
+            'roleType' => $roleType,
             'audioMode' => $audioMode
         );
         if ($audioMode == 'urlLink') {
