@@ -2,7 +2,7 @@
     "name": "365taofang/iflytek-asr",
     "description": "automatic speech recognition",
     "license": "Apache-2.0",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "require": {
         "php": ">=5.6.0",
         "guzzlehttp/guzzle": "^6.3.0",
